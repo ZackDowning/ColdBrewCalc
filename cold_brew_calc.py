@@ -51,10 +51,10 @@ Concentrate: {int(cold_brew.concentrate_volume)}ml or {int(cold_brew.concentrate
 Water: {int(cold_brew.rest_of_water)}ml or {int(cold_brew.rest_of_water / 29.574)}oz
 Concentrate/Water Ratio: 1:{cold_brew.concentrate_to_water_ratio}
 """)
-            more_cmds = input('Do you calculate again? Y/[N]: ')
-            if re.fullmatch(r'[Yy]', more_cmds):
+            confirmation = input('Do you want to calculate again? Y/[N]: ')
+            if re.fullmatch(r'[Yy]', confirmation):
                 continue
-            elif re.fullmatch(r'[Nn]|', more_cmds):
+            elif re.fullmatch(r'[Nn]|', confirmation):
                 break
             else:
                 break
