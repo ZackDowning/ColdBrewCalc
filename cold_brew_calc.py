@@ -46,7 +46,7 @@ if __name__ == '__main__':
                 continue
             cold_brew = ColdBrewConcentrate(v, cr, r)
             print(f"""
-Cold Brew - {int(cold_brew.total_volume)}ml or {int(cold_brew.total_volume / 29.574)}oz
+Cold Brew - {int(cold_brew.desired_volume)}ml or {int(cold_brew.desired_volume / 29.574)}oz
 Coffee/Water Ratio: 1:{int(cold_brew.ratio)}
 ---------------------
 Concentrate: {int(cold_brew.concentrate_volume)}ml or {int(cold_brew.concentrate_volume / 29.574)}oz
