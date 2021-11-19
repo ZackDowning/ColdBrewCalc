@@ -17,7 +17,7 @@ class ColdBrew:
     def __init__(self, desired_volume, ratio):
         self.ratio = ratio
         self.desired_volume = desired_volume
-        self.coffee = desired_volume / 18.67
+        self.coffee = desired_volume / 15.33
         self.total_water = self.coffee * ratio
 
 
