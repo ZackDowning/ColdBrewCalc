@@ -2,22 +2,22 @@ import re
 
 
 class ColdBrewConcentrate:
-    def __init__(self, total_volume, concentrate_ratio, ratio):
+    def __init__(self, desired_volume, concentrate_ratio, ratio):
         self.concentrate_ratio = concentrate_ratio
         self.ratio = ratio
-        self.total_volume = total_volume
+        self.desired_volume = desired_volume
         self.concentrate_to_water_ratio = ratio / concentrate_ratio
-        self.concentrate_volume = total_volume / self.concentrate_to_water_ratio
+        self.concentrate_volume = desired_volume / self.concentrate_to_water_ratio
         self.coffee = self.concentrate_volume / (concentrate_ratio - 1.67)
         self.concentrate_water = self.coffee * concentrate_ratio
-        self.rest_of_water = total_volume - self.concentrate_volume
+        self.rest_of_water = desired_volume - self.concentrate_volume
 
 
 class ColdBrew:
     def __init__(self, desired_volume, ratio):
         self.ratio = ratio
         self.desired_volume = desired_volume
-        self.coffee = self.desired_volume / 18.67
+        self.coffee = desired_volume / 18.67
         self.total_water = self.coffee * ratio
 
 
@@ -76,7 +76,7 @@ Concentrate/Water Ratio: 1:{cold_brew.concentrate_to_water_ratio}
                 continue
             cold_brew = ColdBrew(v, r)
             print(f"""
-Cold Brew - {int(cold_brew.total_volume)}ml or {int(cold_brew.total_volume / 29.574)}oz
+Cold Brew - {int(cold_brew.desired_volume)}ml or {int(cold_brew.desired_volume / 29.574)}oz
 Coffee/Water Ratio: 1:{int(cold_brew.ratio)}
 ---------------------
 Coffee: {int(cold_brew.coffee)}g
