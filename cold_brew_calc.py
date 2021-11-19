@@ -9,7 +9,7 @@ class ColdBrew:
     def __init__(self, total_volume, concentrate_ratio, ratio):
         self.concentrate_ratio = concentrate_ratio
         self.ratio = ratio
-        self.concentrate_to_water_ratio = (ratio - concentrate_ratio) / concentrate_ratio
+        self.concentrate_to_water_ratio = ratio / concentrate_ratio
         self.concentrate_volume = total_volume / self.concentrate_to_water_ratio
         self.coffee = self.concentrate_volume / (concentrate_ratio - 1.67)
         self.concentrate_water = self.coffee * concentrate_ratio
