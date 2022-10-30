@@ -50,7 +50,7 @@ Cold Brew - {int(cold_brew.desired_volume)}ml or {int(cold_brew.desired_volume /
 Coffee/Water Ratio: 1:{int(cold_brew.ratio)}
 ---------------------
 Concentrate: {int(cold_brew.concentrate_volume)}ml or {int(cold_brew.concentrate_volume / 29.574)}oz
-    Coffee: {int(cold_brew.coffee)}g
+    Coffee: {int(cold_brew.coffee)}g or {int(cold_brew.coffee / 28.35)}oz
     Water: {int(cold_brew.concentrate_water)}ml or {int(cold_brew.concentrate_water / 29.574)}oz
     Coffee/Water Ratio: 1:{cr}
 Water: {int(cold_brew.rest_of_water)}ml or {int(cold_brew.rest_of_water / 29.574)}oz
