@@ -1,2 +1,2 @@
 # ColdBrewCalc
-![](https://gcdn.pbrd.co/images/uURvMEfJaFrc.png?o=1)
+![](https://i.imgur.com/vQfhqSF.png)
