@@ -17,6 +17,13 @@ class Concentrate:
         self.concentrate_volume = desired_volume / self.concentrate_to_water_ratio + 1
         self.rest_of_water = desired_volume - self.concentrate_volume
 
+        """
+        Below equation is A=(BC * C) - 2.5C simplified
+
+        A = concentrate volume
+        B = coffee
+        C = concentrate ratio
+        """
         self.coffee = (self.concentrate_volume * (WAF * concentrate_ratio)) / (concentrate_ratio * concentrate_ratio)
 
         self.concentrate_water = self.coffee * concentrate_ratio
