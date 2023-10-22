@@ -1,6 +1,8 @@
 import re
 
 ML_TO_OZ_RATIO = 29.574
+# Water absorption factor - 2.5 grams of water is absorbed to every gram of coffee used
+WAF = 2.5
 
 
 class ColdBrewConcentrate:
@@ -13,7 +15,9 @@ class ColdBrewConcentrate:
         # 1 here accounts for simplifying this formula: Total volume = (concentrate ratio * concentrate) + concentrate
         self.concentrate_volume = desired_volume / self.concentrate_to_water_ratio + 1
         self.rest_of_water = desired_volume - self.concentrate_volume
-        self.coffee = self.concentrate_volume / (concentrate_ratio - 2.5)
+
+        self.coffee = (self.concentrate_volume * (WAF * concentrate_ratio)) / (concentrate_ratio * concentrate_ratio)
+
         self.concentrate_water = self.coffee * concentrate_ratio
 
 
