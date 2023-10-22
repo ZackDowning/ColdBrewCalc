@@ -1,6 +1,7 @@
 import re
 
 ML_TO_OZ_RATIO = 29.574
+G_TO_OZ_RATIO = 28.35
 # Water absorption factor - 2.5 grams of water is absorbed to every gram of coffee used
 WAF = 2.5
 
@@ -58,7 +59,7 @@ Cold Brew - {int(cold_brew.desired_volume)}ml or {int(cold_brew.desired_volume /
 Coffee/Water Ratio: 1:{int(cold_brew.ratio)}
 ---------------------
 Concentrate: {int(cold_brew.concentrate_volume)}ml or {int(cold_brew.concentrate_volume / ML_TO_OZ_RATIO)}oz
-    Coffee: {int(cold_brew.coffee)}g or {int(cold_brew.coffee / 28.35)}oz
+    Coffee: {int(cold_brew.coffee)}g or {int(cold_brew.coffee / G_TO_OZ_RATIO)}oz
     Water: {int(cold_brew.concentrate_water)}ml or {int(cold_brew.concentrate_water / ML_TO_OZ_RATIO)}oz
     Coffee/Water Ratio: 1:{cr}
 Water: {int(cold_brew.rest_of_water)}ml or {int(cold_brew.rest_of_water / ML_TO_OZ_RATIO)}oz
