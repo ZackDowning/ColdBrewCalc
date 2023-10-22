@@ -1,5 +1,7 @@
 import re
 
+ML_TO_OZ_RATIO = 29.574
+
 
 class ColdBrewConcentrate:
     def __init__(self, desired_volume, concentrate_ratio, ratio):
@@ -30,7 +32,7 @@ if __name__ == '__main__':
             r = input('Enter "x" value for total coffee-water ratio "1:x" (Press enter for 1:17): ')
             try:
                 if 'oz' in v:
-                    v = float(v.strip('oz')) * 29.574
+                    v = float(v.strip('oz')) * ML_TO_OZ_RATIO
                 elif 'ml' in v:
                     v = float(v.strip('ml'))
                 else:
@@ -46,14 +48,14 @@ if __name__ == '__main__':
                 continue
             cold_brew = ColdBrewConcentrate(v, cr, r)
             print(f"""
-Cold Brew - {int(cold_brew.desired_volume)}ml or {int(cold_brew.desired_volume / 29.574)}oz
+Cold Brew - {int(cold_brew.desired_volume)}ml or {int(cold_brew.desired_volume / ML_TO_OZ_RATIO)}oz
 Coffee/Water Ratio: 1:{int(cold_brew.ratio)}
 ---------------------
-Concentrate: {int(cold_brew.concentrate_volume)}ml or {int(cold_brew.concentrate_volume / 29.574)}oz
+Concentrate: {int(cold_brew.concentrate_volume)}ml or {int(cold_brew.concentrate_volume / ML_TO_OZ_RATIO)}oz
     Coffee: {int(cold_brew.coffee)}g or {int(cold_brew.coffee / 28.35)}oz
-    Water: {int(cold_brew.concentrate_water)}ml or {int(cold_brew.concentrate_water / 29.574)}oz
+    Water: {int(cold_brew.concentrate_water)}ml or {int(cold_brew.concentrate_water / ML_TO_OZ_RATIO)}oz
     Coffee/Water Ratio: 1:{cr}
-Water: {int(cold_brew.rest_of_water)}ml or {int(cold_brew.rest_of_water / 29.574)}oz
+Water: {int(cold_brew.rest_of_water)}ml or {int(cold_brew.rest_of_water / ML_TO_OZ_RATIO)}oz
 Concentrate/Water Ratio: 1:{cold_brew.concentrate_to_water_ratio}
 """)
         elif re.fullmatch(r'[Nn]', concentrate):
@@ -61,7 +63,7 @@ Concentrate/Water Ratio: 1:{cold_brew.concentrate_to_water_ratio}
             r = input('Enter "x" value for total coffee-water ratio "1:x" (Press enter for 1:17): ')
             try:
                 if 'oz' in v:
-                    v = float(v.strip('oz')) * 29.574
+                    v = float(v.strip('oz')) * ML_TO_OZ_RATIO
                 elif 'ml' in v:
                     v = float(v.strip('ml'))
                 else:
@@ -76,11 +78,11 @@ Concentrate/Water Ratio: 1:{cold_brew.concentrate_to_water_ratio}
                 continue
             cold_brew = ColdBrew(v, r)
             print(f"""
-Cold Brew - {int(cold_brew.desired_volume)}ml or {int(cold_brew.desired_volume / 29.574)}oz
+Cold Brew - {int(cold_brew.desired_volume)}ml or {int(cold_brew.desired_volume / ML_TO_OZ_RATIO)}oz
 Coffee/Water Ratio: 1:{int(cold_brew.ratio)}
 ---------------------
 Coffee: {int(cold_brew.coffee)}g
-Total Water: {int(cold_brew.total_water)}ml or {int(cold_brew.total_water / 29.574)}oz
+Total Water: {int(cold_brew.total_water)}ml or {int(cold_brew.total_water / ML_TO_OZ_RATIO)}oz
 """)
         else:
             print('Invalid entry.')
