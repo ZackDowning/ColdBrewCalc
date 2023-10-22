@@ -9,6 +9,8 @@ class ColdBrewConcentrate:
         self.ratio = ratio
         self.desired_volume = desired_volume
         self.concentrate_to_water_ratio = ratio / concentrate_ratio
+
+        # 1 here accounts for simplifying this formula: Total volume = (concentrate ratio * concentrate) + concentrate
         self.concentrate_volume = desired_volume / self.concentrate_to_water_ratio + 1
         self.rest_of_water = desired_volume - self.concentrate_volume
         self.coffee = self.concentrate_volume / (concentrate_ratio - 2.5)
