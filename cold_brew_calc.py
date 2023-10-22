@@ -29,7 +29,7 @@ class Concentrate:
         self.concentrate_water = self.coffee * concentrate_ratio
 
 
-class ColdBrew:
+class NonConcentrate:
     def __init__(self, desired_volume, ratio):
         self.ratio = ratio
         self.desired_volume = desired_volume
@@ -90,13 +90,13 @@ Concentrate/Water Ratio: 1:{concentrate.concentrate_to_water_ratio}
             except ValueError:
                 print(f"'{r}' value not type 'integer' or 'float'")
                 continue
-            cold_brew = ColdBrew(v, r)
+            non_concentrate = NonConcentrate(v, r)
             print(f"""
-Cold Brew - {int(cold_brew.desired_volume)}ml or {int(cold_brew.desired_volume / ML_TO_OZ_RATIO)}oz
-Coffee/Water Ratio: 1:{int(cold_brew.ratio)}
+Cold Brew - {int(non_concentrate.desired_volume)}ml or {int(non_concentrate.desired_volume / ML_TO_OZ_RATIO)}oz
+Coffee/Water Ratio: 1:{int(non_concentrate.ratio)}
 ---------------------
-Coffee: {int(cold_brew.coffee)}g
-Total Water: {int(cold_brew.total_water)}ml or {int(cold_brew.total_water / ML_TO_OZ_RATIO)}oz
+Coffee: {int(non_concentrate.coffee)}g
+Total Water: {int(non_concentrate.total_water)}ml or {int(non_concentrate.total_water / ML_TO_OZ_RATIO)}oz
 """)
         else:
             print('Invalid entry.')
