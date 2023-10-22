@@ -6,7 +6,7 @@ G_TO_OZ_RATIO = 28.35
 WAF = 2.5
 
 
-class ColdBrewConcentrate:
+class Concentrate:
     def __init__(self, desired_volume, concentrate_ratio, ratio):
         self.concentrate_ratio = concentrate_ratio
         self.ratio = ratio
@@ -32,8 +32,8 @@ class ColdBrew:
 
 if __name__ == '__main__':
     while True:
-        concentrate = input('Do you want to use concentrate? [Y]/N: ')
-        if re.fullmatch(r'[Yy]|', concentrate):
+        if_concentrate = input('Do you want to use concentrate? [Y]/N: ')
+        if re.fullmatch(r'[Yy]|', if_concentrate):
             v = input('Enter total desired volume (add "ml" or "oz" to end with no space): ')
             cr = input('Enter "x" value for concentrate coffee-water ratio "1:x": ')
             r = input('Enter "x" value for total coffee-water ratio "1:x" (Press enter for 1:17): ')
@@ -53,19 +53,19 @@ if __name__ == '__main__':
             except ValueError:
                 print(f"'{cr}' or '{r}' value not type 'integer' or 'float'")
                 continue
-            cold_brew = ColdBrewConcentrate(v, cr, r)
+            concentrate = Concentrate(v, cr, r)
             print(f"""
-Cold Brew - {int(cold_brew.desired_volume)}ml or {int(cold_brew.desired_volume / ML_TO_OZ_RATIO)}oz
-Coffee/Water Ratio: 1:{int(cold_brew.ratio)}
+Cold Brew - {int(concentrate.desired_volume)}ml or {int(concentrate.desired_volume / ML_TO_OZ_RATIO)}oz
+Coffee/Water Ratio: 1:{int(concentrate.ratio)}
 ---------------------
-Concentrate: {int(cold_brew.concentrate_volume)}ml or {int(cold_brew.concentrate_volume / ML_TO_OZ_RATIO)}oz
-    Coffee: {int(cold_brew.coffee)}g or {int(cold_brew.coffee / G_TO_OZ_RATIO)}oz
-    Water: {int(cold_brew.concentrate_water)}ml or {int(cold_brew.concentrate_water / ML_TO_OZ_RATIO)}oz
+Concentrate: {int(concentrate.concentrate_volume)}ml or {int(concentrate.concentrate_volume / ML_TO_OZ_RATIO)}oz
+    Coffee: {int(concentrate.coffee)}g or {int(concentrate.coffee / G_TO_OZ_RATIO)}oz
+    Water: {int(concentrate.concentrate_water)}ml or {int(concentrate.concentrate_water / ML_TO_OZ_RATIO)}oz
     Coffee/Water Ratio: 1:{cr}
-Water: {int(cold_brew.rest_of_water)}ml or {int(cold_brew.rest_of_water / ML_TO_OZ_RATIO)}oz
-Concentrate/Water Ratio: 1:{cold_brew.concentrate_to_water_ratio}
+Water: {int(concentrate.rest_of_water)}ml or {int(concentrate.rest_of_water / ML_TO_OZ_RATIO)}oz
+Concentrate/Water Ratio: 1:{concentrate.concentrate_to_water_ratio}
 """)
-        elif re.fullmatch(r'[Nn]', concentrate):
+        elif re.fullmatch(r'[Nn]', if_concentrate):
             v = input('Enter total desired volume (add "ml" or "oz" to end with no space): ')
             r = input('Enter "x" value for total coffee-water ratio "1:x" (Press enter for 1:17): ')
             try:
