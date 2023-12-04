@@ -1,6 +1,6 @@
 import re
 
-from typing import override
+from typing import override, Optional
 
 ML_TO_OZ_RATIO = 29.574
 G_TO_OZ_RATIO = 28.35
@@ -10,16 +10,16 @@ DEFAULT_TOTAL_RATIO = 17
 
 
 class ColdBrew:
-    def __init__(self, desired_volume, ratio):
+    def __init__(self, desired_volume: int, ratio: int):
         self._ratio = ratio
         self._desired_volume = desired_volume
 
-    def print(self) -> None:
+    def print(self):
         pass
 
 
 class Concentrate(ColdBrew):
-    def __init__(self, desired_volume, concentrate_ratio, ratio):
+    def __init__(self, desired_volume, ratio, concentrate_ratio: int):
         super().__init__(desired_volume, ratio)
         self._concentrate_ratio = concentrate_ratio
         self._concentrate_to_water_ratio = (ratio - concentrate_ratio) / concentrate_ratio
@@ -63,7 +63,7 @@ class NonConcentrate(ColdBrew):
         """)
 
 
-def get_inputs(concentrate):
+def get_inputs(concentrate: Optional[re.Match]):
     volume = input('Enter total desired volume (add "ml" or "oz" to end with no space): ')
     total_ratio = input('Enter "x" value for total coffee-water ratio "1:x" (Press enter for 1:17): ')
     if concentrate:
@@ -72,7 +72,7 @@ def get_inputs(concentrate):
     return volume, total_ratio
 
 
-def get_volume(volume_input):
+def get_volume(volume_input: str):
     if 'oz' in volume_input:
         return float(volume_input.strip('oz')) * ML_TO_OZ_RATIO
     elif 'ml' in volume_input:
@@ -82,7 +82,7 @@ def get_volume(volume_input):
         return None
 
 
-def get_ratio(ratio):
+def get_ratio(ratio: Optional[str]):
     return int(ratio) if ratio else DEFAULT_TOTAL_RATIO
 
 
