@@ -63,12 +63,12 @@ class NonConcentrate(ColdBrew):
         """)
 
 
-def get_inputs(conc):
+def get_inputs(concentrate):
     volume = input('Enter total desired volume (add "ml" or "oz" to end with no space): ')
     total_ratio = input('Enter "x" value for total coffee-water ratio "1:x" (Press enter for 1:17): ')
-    if conc:
-        conc_ratio = input('Enter "x" value for concentrate coffee-water ratio "1:x": ')
-        return volume, conc_ratio, total_ratio
+    if concentrate:
+        concentrate_ratio = input('Enter "x" value for concentrate coffee-water ratio "1:x": ')
+        return volume, concentrate_ratio, total_ratio
     return volume, total_ratio
 
 
