@@ -67,23 +67,27 @@ class NonConcentrate(ColdBrew):
     """
 
 
+def get_volume():
+    while True:
+        volume_input = input("Enter total desired volume (add 'ml' or 'oz' to end with no space): ")
+        try:
+            if "oz" in volume_input:
+                return float(volume_input.strip("oz")) * ML_TO_OZ_RATIO
+            elif "ml" in volume_input:
+                return float(volume_input.strip("ml"))
+            else:
+                print(f"'{volume_input}' doesn't contain 'ml' or 'oz'")
+        except ValueError:
+            print(f"'{volume_input} isn't a number.")
+
+
 def get_inputs(concentrate: bool):
-    volume = input("Enter total desired volume (add 'ml' or 'oz' to end with no space): ")
+    volume = get_volume()
     total_ratio = input("Enter 'x' value for total coffee-water ratio '1:x' (Press enter for 1:17): ")
     if concentrate:
         concentrate_ratio = input("Enter 'x' value for concentrate coffee-water ratio '1:x': ")
         return volume, total_ratio, concentrate_ratio
     return volume, total_ratio
-
-
-def get_volume(volume_input: str):
-    if "oz" in volume_input:
-        return float(volume_input.strip("oz")) * ML_TO_OZ_RATIO
-    elif "ml" in volume_input:
-        return float(volume_input.strip("ml"))
-    else:
-        print(f"'{volume_input}' doesn't contain 'ml' or 'oz'")
-        return None
 
 
 def get_ratio(ratio: Optional[str]):
@@ -96,9 +100,6 @@ def get_value_error(incorrect_value):
 
 def clean_inputs(volume, ratio, concentrate_ratio=None):
     try:
-        volume = get_volume(volume)
-        if not volume:
-            return None
         ratio = get_ratio(ratio)
         if concentrate_ratio:
             try:
