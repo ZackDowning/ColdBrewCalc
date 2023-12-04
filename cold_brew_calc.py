@@ -12,6 +12,7 @@ WELCOME_BANNER = """
 / /__/ _ \\/ / _  / _  / __/ -_) |/|/ / /__/ _ `/ / __/
 \\___/\\___/_/\\_,_/____/_/  \\__/|__,__/\\___/\\_,_/_/\\__/
 """
+NUMBER_INPUT_ERROR = "'{}' value not type 'integer' or 'float'"
 
 
 class ColdBrew:
@@ -78,7 +79,7 @@ def get_volume():
             else:
                 print(f"'{volume_input}' doesn't contain 'ml' or 'oz'")
         except ValueError:
-            print(f"'{volume_input} isn't a number.")
+            print(NUMBER_INPUT_ERROR.format(volume_input))
 
 
 def get_inputs(concentrate: bool):
@@ -94,10 +95,6 @@ def get_ratio(ratio: Optional[str]):
     return int(ratio) if ratio else DEFAULT_TOTAL_RATIO
 
 
-def get_value_error(incorrect_value):
-    return f"'{incorrect_value}' value not type 'integer' or 'float'"
-
-
 def clean_inputs(volume, ratio, concentrate_ratio=None):
     try:
         ratio = get_ratio(ratio)
@@ -105,11 +102,11 @@ def clean_inputs(volume, ratio, concentrate_ratio=None):
             try:
                 return volume, ratio, int(concentrate_ratio)
             except ValueError:
-                print(get_value_error(concentrate_ratio))
+                print(NUMBER_INPUT_ERROR.format(concentrate_ratio))
                 return None
         return volume, ratio
     except ValueError:
-        print(get_value_error(ratio))
+        print(NUMBER_INPUT_ERROR.format(ratio))
         return None
 
 
