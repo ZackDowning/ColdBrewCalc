@@ -71,18 +71,24 @@ def get_inputs(conc: bool):
     return volume, total_ratio
 
 
+def get_volume(volume_input):
+    if 'oz' in volume_input:
+        return float(volume_input.strip('oz')) * ML_TO_OZ_RATIO
+    elif 'ml' in volume_input:
+        return float(volume_input.strip('ml'))
+    else:
+        print(f"'{volume_input}' doesn't contain 'ml' or 'oz'")
+        return None
+
+
 if __name__ == '__main__':
     while True:
         if_concentrate = input('Do you want to use concentrate? [Y]/N: ')
         if re.fullmatch(r'[Yy]|', if_concentrate):
             v, cr, r = get_inputs(True)
             try:
-                if 'oz' in v:
-                    v = float(v.strip('oz')) * ML_TO_OZ_RATIO
-                elif 'ml' in v:
-                    v = float(v.strip('ml'))
-                else:
-                    print(f"'{v}' doesn't contain 'ml' or 'oz'")
+                v = get_volume(v)
+                if not v:
                     continue
                 cr = int(cr)
                 if r == '':
@@ -97,12 +103,8 @@ if __name__ == '__main__':
         elif re.fullmatch(r'[Nn]', if_concentrate):
             v, r = get_inputs(False)
             try:
-                if 'oz' in v:
-                    v = float(v.strip('oz')) * ML_TO_OZ_RATIO
-                elif 'ml' in v:
-                    v = float(v.strip('ml'))
-                else:
-                    print(f"'{v}' doesn't contain 'ml' or 'oz'")
+                v = get_volume(v)
+                if not v:
                     continue
                 if r == '':
                     r = 17
