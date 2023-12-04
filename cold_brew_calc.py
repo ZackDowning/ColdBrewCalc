@@ -108,7 +108,7 @@ def clean_inputs(volume, ratio, concentrate_ratio=None):
         return None
 
 
-if __name__ == '__main__':
+def input_loop():
     while True:
         if_concentrate = input('Do you want to use concentrate? [Y]/N: ')
         if re.fullmatch(r'[Yy]|', if_concentrate):
@@ -133,3 +133,7 @@ if __name__ == '__main__':
             break
         else:
             break
+
+
+if __name__ == '__main__':
+    input_loop()
