@@ -5,7 +5,6 @@ ML_TO_OZ_RATIO = 29.574
 G_TO_OZ_RATIO = 28.35
 # Water absorption factor - 2.5 grams of water is absorbed to every gram of coffee used
 WAF = 2.5
-DEFAULT_TOTAL_RATIO = 17
 WELCOME_BANNER = """
   _____     __   _____                 _____     __
  / ___/__  / /__/ / _ )_______ _    __/ ___/__ _/ /___
@@ -82,17 +81,9 @@ def get_volume():
             print(NUMBER_INPUT_ERROR.format(volume_input))
 
 
-def get_inputs(concentrate: bool):
-    volume = get_volume()
-    total_ratio = input("Enter 'x' value for total coffee-water ratio '1:x' (Press enter for 1:17): ")
-    if concentrate:
-        concentrate_ratio = input("Enter 'x' value for concentrate coffee-water ratio '1:x': ")
-        return volume, total_ratio, concentrate_ratio
-    return volume, total_ratio
-
-
-def get_ratio(ratio: Optional[str], default=None):
+def get_ratio(input_msg: str, default=Optional[int]):
     while True:
+        ratio = input(input_msg)
         try:
             if default:
                 return int(ratio) if ratio else default
@@ -101,12 +92,16 @@ def get_ratio(ratio: Optional[str], default=None):
             print(NUMBER_INPUT_ERROR.format(ratio))
 
 
-def clean_inputs(volume, ratio, concentrate_ratio=None):
-    default_total_ratio = 17
-    ratio = get_ratio(ratio, default_total_ratio)
-    if concentrate_ratio:
-        return volume, ratio, get_ratio(concentrate_ratio)
-    return volume, ratio
+def get_inputs(concentrate: bool):
+    default_ratio = 17
+    total_ratio_message = f"Enter 'x' value for total coffee-water ratio '1:x' (Press enter for 1:{default_ratio}): "
+
+    volume = get_volume()
+    total_ratio = get_ratio(total_ratio_message, default_ratio)
+    if concentrate:
+        concentrate_ratio = get_ratio("Enter 'x' value for concentrate coffee-water ratio '1:x': ")
+        return volume, total_ratio, concentrate_ratio
+    return volume, total_ratio
 
 
 def get_yes_or_no_bool(message: str, yes_default: bool = True) -> bool:
@@ -122,9 +117,9 @@ def get_yes_or_no_bool(message: str, yes_default: bool = True) -> bool:
 def input_loop():
     while True:
         use_concentrate = get_yes_or_no_bool("Do you want to use concentrate? [Y]/N: ")
-        cleaned_inputs = clean_inputs(*get_inputs(use_concentrate))
+        inputs = get_inputs(use_concentrate)
 
-        cold_brew = Concentrate(*cleaned_inputs) if use_concentrate else NonConcentrate(*cleaned_inputs)
+        cold_brew = Concentrate(*inputs) if use_concentrate else NonConcentrate(*inputs)
         recipe = cold_brew.get_recipe()
         print(recipe)
 
