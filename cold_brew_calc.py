@@ -73,7 +73,7 @@ def get_inputs(concentrate: bool):
     total_ratio = input('Enter "x" value for total coffee-water ratio "1:x" (Press enter for 1:17): ')
     if concentrate:
         concentrate_ratio = input('Enter "x" value for concentrate coffee-water ratio "1:x": ')
-        return volume, concentrate_ratio, total_ratio
+        return volume, total_ratio, concentrate_ratio
     return volume, total_ratio
 
 
