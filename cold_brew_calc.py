@@ -91,23 +91,22 @@ def get_inputs(concentrate: bool):
     return volume, total_ratio
 
 
-def get_ratio(ratio: Optional[str]):
-    return int(ratio) if ratio else DEFAULT_TOTAL_RATIO
+def get_ratio(ratio: Optional[str], default=None):
+    while True:
+        try:
+            if default:
+                return int(ratio) if ratio else default
+            return int(ratio)
+        except ValueError:
+            print(NUMBER_INPUT_ERROR.format(ratio))
 
 
 def clean_inputs(volume, ratio, concentrate_ratio=None):
-    try:
-        ratio = get_ratio(ratio)
-        if concentrate_ratio:
-            try:
-                return volume, ratio, int(concentrate_ratio)
-            except ValueError:
-                print(NUMBER_INPUT_ERROR.format(concentrate_ratio))
-                return None
-        return volume, ratio
-    except ValueError:
-        print(NUMBER_INPUT_ERROR.format(ratio))
-        return None
+    default_total_ratio = 17
+    ratio = get_ratio(ratio, default_total_ratio)
+    if concentrate_ratio:
+        return volume, ratio, get_ratio(concentrate_ratio)
+    return volume, ratio
 
 
 def get_yes_or_no_bool(message: str, yes_default: bool = True) -> bool:
@@ -124,8 +123,6 @@ def input_loop():
     while True:
         use_concentrate = get_yes_or_no_bool("Do you want to use concentrate? [Y]/N: ")
         cleaned_inputs = clean_inputs(*get_inputs(use_concentrate))
-        if not cleaned_inputs:
-            continue
 
         cold_brew = Concentrate(*cleaned_inputs) if use_concentrate else NonConcentrate(*cleaned_inputs)
         recipe = cold_brew.get_recipe()
