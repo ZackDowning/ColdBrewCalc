@@ -12,9 +12,12 @@ DEFAULT_TOTAL_RATIO = 17
 class ColdBrew:
     def __init__(self, desired_volume: int, ratio: int):
         self._shared_recipe = f"""
-        Cold Brew - {int(desired_volume)}ml or {int(desired_volume / ML_TO_OZ_RATIO)}oz
-        Coffee/Water Ratio: 1:{int(ratio)}
-        ---------------------"""
+    =====================
+    Recipe
+    =====================
+    Cold Brew - {int(desired_volume)}ml or {int(desired_volume / ML_TO_OZ_RATIO)}oz
+    Coffee/Water Ratio: 1:{int(ratio)}
+    ---------------------"""
 
     def get_recipe(self) -> str:
         pass
@@ -36,13 +39,13 @@ class Concentrate(ColdBrew):
     @override
     def get_recipe(self):
         return f"""{self._shared_recipe}
-        Concentrate: {int(self._concentrate_volume)}ml or {int(self._concentrate_volume / ML_TO_OZ_RATIO)}oz
-            Coffee: {int(self._coffee)}g or {int(self._coffee / G_TO_OZ_RATIO)}oz
-            Water: {int(self._concentrate_water)}ml or {int(self._concentrate_water / ML_TO_OZ_RATIO)}oz
-            Coffee/Water Ratio: 1:{self._concentrate_ratio}
-        Water: {int(self._rest_of_water)}ml or {int(self._rest_of_water / ML_TO_OZ_RATIO)}oz
-        Concentrate/Water Ratio: 1:{self._concentrate_to_water_ratio}
-        """
+    Concentrate: {int(self._concentrate_volume)}ml or {int(self._concentrate_volume / ML_TO_OZ_RATIO)}oz
+        Coffee: {int(self._coffee)}g or {int(self._coffee / G_TO_OZ_RATIO)}oz
+        Water: {int(self._concentrate_water)}ml or {int(self._concentrate_water / ML_TO_OZ_RATIO)}oz
+        Coffee/Water Ratio: 1:{self._concentrate_ratio}
+    Water: {int(self._rest_of_water)}ml or {int(self._rest_of_water / ML_TO_OZ_RATIO)}oz
+    Concentrate/Water Ratio: 1:{self._concentrate_to_water_ratio}
+    """
 
 
 class NonConcentrate(ColdBrew):
@@ -54,9 +57,9 @@ class NonConcentrate(ColdBrew):
     @override
     def get_recipe(self):
         return f"""{self._shared_recipe}
-        Coffee: {int(self._coffee)}g or {int(self._coffee / G_TO_OZ_RATIO)}oz
-        Total Water: {int(self._total_water)}ml or {int(self._total_water / ML_TO_OZ_RATIO)}oz
-        """
+    Coffee: {int(self._coffee)}g or {int(self._coffee / G_TO_OZ_RATIO)}oz
+    Total Water: {int(self._total_water)}ml or {int(self._total_water / ML_TO_OZ_RATIO)}oz
+    """
 
 
 def get_inputs(concentrate: Optional[re.Match]):
