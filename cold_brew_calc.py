@@ -65,7 +65,7 @@ class NonConcentrate(ColdBrew):
     """
 
 
-def get_volume():
+def input_volume():
     while True:
         volume_input = input("Enter total desired volume (add 'ml' or 'oz' to end with no space): ")
         try:
@@ -79,7 +79,7 @@ def get_volume():
             print(NUMBER_INPUT_ERROR.format(volume_input))
 
 
-def get_ratio(input_msg: str, default=Optional[int]):
+def input_ratio(input_msg: str, default=Optional[int]):
     while True:
         ratio = input(input_msg)
         try:
@@ -90,19 +90,19 @@ def get_ratio(input_msg: str, default=Optional[int]):
             print(NUMBER_INPUT_ERROR.format(ratio))
 
 
-def get_inputs(concentrate: bool):
+def get_cold_brew_inputs(concentrate: bool):
     default_ratio = 17
     total_ratio_message = f"Enter 'x' value for total coffee-water ratio '1:x' (Press enter for 1:{default_ratio}): "
 
-    volume = get_volume()
-    total_ratio = get_ratio(total_ratio_message, default_ratio)
+    volume = input_volume()
+    total_ratio = input_ratio(total_ratio_message, default_ratio)
     if concentrate:
-        concentrate_ratio = get_ratio("Enter 'x' value for concentrate coffee-water ratio '1:x': ")
+        concentrate_ratio = input_ratio("Enter 'x' value for concentrate coffee-water ratio '1:x': ")
         return volume, total_ratio, concentrate_ratio
     return volume, total_ratio
 
 
-def get_yes_or_no_bool(message: str, yes_default: bool = True) -> bool:
+def input_yes_or_no(message: str, yes_default: bool = True) -> bool:
     while True:
         output = input(message)
         if fullmatch(r"[Nn]|[Yy]|", output):
@@ -114,14 +114,14 @@ def get_yes_or_no_bool(message: str, yes_default: bool = True) -> bool:
 
 def input_loop():
     while True:
-        use_concentrate = get_yes_or_no_bool("Do you want to use concentrate? [Y]/N: ")
-        inputs = get_inputs(use_concentrate)
+        use_concentrate = input_yes_or_no("Do you want to use concentrate? [Y]/N: ")
+        inputs = get_cold_brew_inputs(use_concentrate)
 
         cold_brew = Concentrate(*inputs) if use_concentrate else NonConcentrate(*inputs)
         recipe = cold_brew.get_recipe()
         print(recipe)
 
-        calc_again = get_yes_or_no_bool("Do you want to calculate again? Y/[N]: ", False)
+        calc_again = input_yes_or_no("Do you want to calculate again? Y/[N]: ", False)
         if not calc_again:
             break
 
