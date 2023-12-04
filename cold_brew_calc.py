@@ -68,7 +68,7 @@ class NonConcentrate(ColdBrew):
     """
 
 
-def get_inputs(concentrate: Optional[re.Match]):
+def get_inputs(concentrate: bool):
     volume = input('Enter total desired volume (add "ml" or "oz" to end with no space): ')
     total_ratio = input('Enter "x" value for total coffee-water ratio "1:x" (Press enter for 1:17): ')
     if concentrate:
@@ -113,14 +113,19 @@ def clean_inputs(volume, ratio, concentrate_ratio=None):
         return None
 
 
+def get_yes_or_no_bool(message: str, yes_default: bool = True) -> bool:
+    while True:
+        output = input(message)
+        if re.fullmatch(r'[Nn]|[Yy]|', output):
+            if yes_default:
+                return True if output.lower() == "y" or not output else False
+            return True if output.lower() == "y" else False
+        print("Invalid entry.")
+
+
 def input_loop():
     while True:
-        concentrate_input = input('Do you want to use concentrate? [Y]/N: ')
-        if not re.fullmatch(r'[Nn]|[Yy]|', concentrate_input):
-            print('Invalid entry.')
-            continue
-
-        use_concentrate = re.fullmatch(r'[Yy]|', concentrate_input)
+        use_concentrate = get_yes_or_no_bool("Do you want to use concentrate? [Y]/N: ")
         cleaned_inputs = clean_inputs(*get_inputs(use_concentrate))
         if not cleaned_inputs:
             continue
@@ -129,12 +134,8 @@ def input_loop():
         recipe = cold_brew.get_recipe()
         print(recipe)
 
-        calc_again = input('Do you want to calculate again? Y/[N]: ')
-        if re.fullmatch(r'[Yy]', calc_again):
-            continue
-        elif re.fullmatch(r'[Nn]|', calc_again):
-            break
-        else:
+        calc_again = get_yes_or_no_bool("Do you want to calculate again? Y/[N]: ", False)
+        if not calc_again:
             break
 
 
