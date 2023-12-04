@@ -63,7 +63,7 @@ class NonConcentrate(ColdBrew):
         """)
 
 
-def get_inputs(conc: bool):
+def get_inputs(conc):
     volume = input('Enter total desired volume (add "ml" or "oz" to end with no space): ')
     total_ratio = input('Enter "x" value for total coffee-water ratio "1:x" (Press enter for 1:17): ')
     if conc:
@@ -110,22 +110,19 @@ def clean_inputs(volume, ratio, concentrate_ratio=None):
 
 def input_loop():
     while True:
-        if_concentrate = input('Do you want to use concentrate? [Y]/N: ')
-        if re.fullmatch(r'[Yy]|', if_concentrate):
-            cleaned_inputs = clean_inputs(*get_inputs(True))
-            if not cleaned_inputs:
-                continue
-            concentrate = Concentrate(*cleaned_inputs)
-            concentrate.print()
-        elif re.fullmatch(r'[Nn]', if_concentrate):
-            cleaned_inputs = clean_inputs(*get_inputs(False))
-            if not cleaned_inputs:
-                continue
-            non_concentrate = NonConcentrate(*cleaned_inputs)
-            non_concentrate.print()
-        else:
+        concentrate_input = input('Do you want to use concentrate? [Y]/N: ')
+        if not re.fullmatch(r'[Nn]|[Yy]|', concentrate_input):
             print('Invalid entry.')
             continue
+
+        use_concentrate = re.fullmatch(r'[Yy]|', concentrate_input)
+        cleaned_inputs = clean_inputs(*get_inputs(use_concentrate))
+        if not cleaned_inputs:
+            continue
+
+        cold_brew = Concentrate(*cleaned_inputs) if use_concentrate else NonConcentrate(*cleaned_inputs)
+        cold_brew.print()
+
         calc_again = input('Do you want to calculate again? Y/[N]: ')
         if re.fullmatch(r'[Yy]', calc_again):
             continue
