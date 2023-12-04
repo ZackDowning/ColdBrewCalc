@@ -83,7 +83,7 @@ def get_volume(volume_input):
 
 
 def get_ratio(ratio):
-    return DEFAULT_TOTAL_RATIO if ratio == '' else int(ratio)
+    return int(ratio) if ratio else DEFAULT_TOTAL_RATIO
 
 
 if __name__ == '__main__':
