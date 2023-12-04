@@ -1,6 +1,6 @@
 import re
 
-from typing import override
+from typing import override, Optional
 
 ML_TO_OZ_RATIO = 29.574
 G_TO_OZ_RATIO = 28.35
@@ -86,33 +86,42 @@ def get_ratio(ratio):
     return int(ratio) if ratio else DEFAULT_TOTAL_RATIO
 
 
+def print_value_error(incorrect_value):
+    print(f"'{incorrect_value}' value not type 'integer' or 'float'")
+
+
+def clean_inputs(volume, ratio, concentrate_ratio=None):
+    try:
+        volume = get_volume(volume)
+        if not volume:
+            return None
+        ratio = get_ratio(ratio)
+        if concentrate_ratio:
+            try:
+                return volume, ratio, int(concentrate_ratio)
+            except ValueError:
+                print_value_error(concentrate_ratio)
+                return None
+        return volume, ratio
+    except ValueError:
+        print_value_error(ratio)
+        return None
+
+
 if __name__ == '__main__':
     while True:
         if_concentrate = input('Do you want to use concentrate? [Y]/N: ')
         if re.fullmatch(r'[Yy]|', if_concentrate):
-            v, cr, r = get_inputs(True)
-            try:
-                v = get_volume(v)
-                if not v:
-                    continue
-                r = get_ratio(r)
-                cr = int(cr)
-            except ValueError:
-                print(f"'{cr}' or '{r}' value not type 'integer' or 'float'")
+            cleaned_inputs = clean_inputs(*get_inputs(True))
+            if not cleaned_inputs:
                 continue
-            concentrate = Concentrate(v, cr, r)
+            concentrate = Concentrate(*cleaned_inputs)
             concentrate.print()
         elif re.fullmatch(r'[Nn]', if_concentrate):
-            v, r = get_inputs(False)
-            try:
-                v = get_volume(v)
-                if not v:
-                    continue
-                r = get_ratio(r)
-            except ValueError:
-                print(f"'{r}' value not type 'integer' or 'float'")
+            cleaned_inputs = clean_inputs(*get_inputs(False))
+            if not cleaned_inputs:
                 continue
-            non_concentrate = NonConcentrate(v, r)
+            non_concentrate = NonConcentrate(*cleaned_inputs)
             non_concentrate.print()
         else:
             print('Invalid entry.')
