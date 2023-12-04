@@ -21,7 +21,7 @@ class ColdBrew:
 class Concentrate(ColdBrew):
     def __init__(self, desired_volume, concentrate_ratio, ratio):
         super().__init__(desired_volume, ratio)
-        concentrate_ratio = concentrate_ratio
+        self._concentrate_ratio = concentrate_ratio
         self._concentrate_to_water_ratio = (ratio - concentrate_ratio) / concentrate_ratio
 
         self._concentrate_volume = desired_volume / (ratio / concentrate_ratio)
@@ -40,7 +40,7 @@ class Concentrate(ColdBrew):
         Concentrate: {int(self._concentrate_volume)}ml or {int(self._concentrate_volume / ML_TO_OZ_RATIO)}oz
             Coffee: {int(self._coffee)}g or {int(self._coffee / G_TO_OZ_RATIO)}oz
             Water: {int(self._concentrate_water)}ml or {int(self._concentrate_water / ML_TO_OZ_RATIO)}oz
-            Coffee/Water Ratio: 1:{cr}
+            Coffee/Water Ratio: 1:{self._concentrate_ratio}
         Water: {int(self._rest_of_water)}ml or {int(self._rest_of_water / ML_TO_OZ_RATIO)}oz
         Concentrate/Water Ratio: 1:{self._concentrate_to_water_ratio}
         """)
