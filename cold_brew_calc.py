@@ -1,5 +1,4 @@
-import re
-
+from re import fullmatch
 from typing import override, Optional
 
 ML_TO_OZ_RATIO = 29.574
@@ -116,7 +115,7 @@ def clean_inputs(volume, ratio, concentrate_ratio=None):
 def get_yes_or_no_bool(message: str, yes_default: bool = True) -> bool:
     while True:
         output = input(message)
-        if re.fullmatch(r"[Nn]|[Yy]|", output):
+        if fullmatch(r"[Nn]|[Yy]|", output):
             if yes_default:
                 return True if output.lower() == "y" or not output else False
             return True if output.lower() == "y" else False
