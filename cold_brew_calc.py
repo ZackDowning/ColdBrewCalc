@@ -7,6 +7,12 @@ G_TO_OZ_RATIO = 28.35
 # Water absorption factor - 2.5 grams of water is absorbed to every gram of coffee used
 WAF = 2.5
 DEFAULT_TOTAL_RATIO = 17
+WELCOME_BANNER = """
+  _____     __   _____                 _____     __
+ / ___/__  / /__/ / _ )_______ _    __/ ___/__ _/ /___
+/ /__/ _ \\/ / _  / _  / __/ -_) |/|/ / /__/ _ `/ / __/
+\\___/\\___/_/\\_,_/____/_/  \\__/|__,__/\\___/\\_,_/_/\\__/
+"""
 
 
 class ColdBrew:
@@ -132,5 +138,10 @@ def input_loop():
             break
 
 
-if __name__ == '__main__':
+def main():
+    print(WELCOME_BANNER)
     input_loop()
+
+
+if __name__ == '__main__':
+    main()
