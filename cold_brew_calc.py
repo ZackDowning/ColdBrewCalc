@@ -1,5 +1,5 @@
 from re import fullmatch
-from typing import override, Optional
+from typing import Optional
 
 ML_TO_OZ_RATIO = 29.574
 G_TO_OZ_RATIO = 28.35
@@ -41,7 +41,6 @@ class Concentrate(ColdBrew):
 
         self._concentrate_water = self._coffee * concentrate_ratio
 
-    @override
     def get_recipe(self):
         return f"""{self._shared_recipe}
     Concentrate: {int(self._concentrate_volume)}ml or {int(self._concentrate_volume / ML_TO_OZ_RATIO)}oz
@@ -59,7 +58,6 @@ class NonConcentrate(ColdBrew):
         self._coffee = desired_volume / (ratio - WAF)
         self._total_water = self._coffee * ratio
 
-    @override
     def get_recipe(self):
         return f"""{self._shared_recipe}
     Coffee: {int(self._coffee)}g or {int(self._coffee / G_TO_OZ_RATIO)}oz
