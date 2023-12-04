@@ -86,8 +86,8 @@ def get_ratio(ratio: Optional[str]):
     return int(ratio) if ratio else DEFAULT_TOTAL_RATIO
 
 
-def print_value_error(incorrect_value):
-    print(f"'{incorrect_value}' value not type 'integer' or 'float'")
+def get_value_error(incorrect_value):
+    return f"'{incorrect_value}' value not type 'integer' or 'float'"
 
 
 def clean_inputs(volume, ratio, concentrate_ratio=None):
@@ -100,11 +100,11 @@ def clean_inputs(volume, ratio, concentrate_ratio=None):
             try:
                 return volume, ratio, int(concentrate_ratio)
             except ValueError:
-                print_value_error(concentrate_ratio)
+                print(get_value_error(concentrate_ratio))
                 return None
         return volume, ratio
     except ValueError:
-        print_value_error(ratio)
+        print(get_value_error(ratio))
         return None
 
 
