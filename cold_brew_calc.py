@@ -101,7 +101,7 @@ Concentrate/Water Ratio: 1:{concentrate.concentrate_to_water_ratio}
 Cold Brew - {int(non_concentrate.desired_volume)}ml or {int(non_concentrate.desired_volume / ML_TO_OZ_RATIO)}oz
 Coffee/Water Ratio: 1:{int(non_concentrate.ratio)}
 ---------------------
-Coffee: {int(non_concentrate.coffee)}g
+Coffee: {int(non_concentrate.coffee)}g or {int(non_concentrate.coffee / G_TO_OZ_RATIO)}oz
 Total Water: {int(non_concentrate.total_water)}ml or {int(non_concentrate.total_water / ML_TO_OZ_RATIO)}oz
 """)
         else:
