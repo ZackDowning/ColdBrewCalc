@@ -69,19 +69,19 @@ class NonConcentrate(ColdBrew):
 
 
 def get_inputs(concentrate: bool):
-    volume = input('Enter total desired volume (add "ml" or "oz" to end with no space): ')
-    total_ratio = input('Enter "x" value for total coffee-water ratio "1:x" (Press enter for 1:17): ')
+    volume = input("Enter total desired volume (add 'ml' or 'oz' to end with no space): ")
+    total_ratio = input("Enter 'x' value for total coffee-water ratio '1:x' (Press enter for 1:17): ")
     if concentrate:
-        concentrate_ratio = input('Enter "x" value for concentrate coffee-water ratio "1:x": ')
+        concentrate_ratio = input("Enter 'x' value for concentrate coffee-water ratio '1:x': ")
         return volume, total_ratio, concentrate_ratio
     return volume, total_ratio
 
 
 def get_volume(volume_input: str):
-    if 'oz' in volume_input:
-        return float(volume_input.strip('oz')) * ML_TO_OZ_RATIO
-    elif 'ml' in volume_input:
-        return float(volume_input.strip('ml'))
+    if "oz" in volume_input:
+        return float(volume_input.strip("oz")) * ML_TO_OZ_RATIO
+    elif "ml" in volume_input:
+        return float(volume_input.strip("ml"))
     else:
         print(f"'{volume_input}' doesn't contain 'ml' or 'oz'")
         return None
@@ -116,7 +116,7 @@ def clean_inputs(volume, ratio, concentrate_ratio=None):
 def get_yes_or_no_bool(message: str, yes_default: bool = True) -> bool:
     while True:
         output = input(message)
-        if re.fullmatch(r'[Nn]|[Yy]|', output):
+        if re.fullmatch(r"[Nn]|[Yy]|", output):
             if yes_default:
                 return True if output.lower() == "y" or not output else False
             return True if output.lower() == "y" else False
@@ -144,5 +144,5 @@ def main():
     input_loop()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
