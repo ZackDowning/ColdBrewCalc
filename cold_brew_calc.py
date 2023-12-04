@@ -1,32 +1,65 @@
 import re
 
+from typing import override
+
 ML_TO_OZ_RATIO = 29.574
 G_TO_OZ_RATIO = 28.35
 # Water absorption factor - 2.5 grams of water is absorbed to every gram of coffee used
 WAF = 2.5
 
 
-class Concentrate:
-    def __init__(self, desired_volume, concentrate_ratio, ratio):
-        self.concentrate_ratio = concentrate_ratio
-        self.ratio = ratio
-        self.desired_volume = desired_volume
-        self.concentrate_to_water_ratio = (ratio - concentrate_ratio) / concentrate_ratio
-
-        self.concentrate_volume = desired_volume / (ratio / concentrate_ratio)
-        self.rest_of_water = desired_volume - self.concentrate_volume
-
-        self.coffee = self.concentrate_volume / (concentrate_ratio - WAF)
-
-        self.concentrate_water = self.coffee * concentrate_ratio
-
-
-class NonConcentrate:
+class ColdBrew:
     def __init__(self, desired_volume, ratio):
-        self.ratio = ratio
-        self.desired_volume = desired_volume
-        self.coffee = desired_volume / (ratio - WAF)
-        self.total_water = self.coffee * ratio
+        self._ratio = ratio
+        self._desired_volume = desired_volume
+
+    def print(self) -> None:
+        pass
+
+
+class Concentrate(ColdBrew):
+    def __init__(self, desired_volume, concentrate_ratio, ratio):
+        super().__init__(desired_volume, ratio)
+        concentrate_ratio = concentrate_ratio
+        self._concentrate_to_water_ratio = (ratio - concentrate_ratio) / concentrate_ratio
+
+        self._concentrate_volume = desired_volume / (ratio / concentrate_ratio)
+        self._rest_of_water = desired_volume - self._concentrate_volume
+
+        self._coffee = self._concentrate_volume / (concentrate_ratio - WAF)
+
+        self._concentrate_water = self._coffee * concentrate_ratio
+
+    @override
+    def print(self):
+        print(f"""
+        Cold Brew - {int(self._desired_volume)}ml or {int(self._desired_volume / ML_TO_OZ_RATIO)}oz
+        Coffee/Water Ratio: 1:{int(self._ratio)}
+        ---------------------
+        Concentrate: {int(self._concentrate_volume)}ml or {int(self._concentrate_volume / ML_TO_OZ_RATIO)}oz
+            Coffee: {int(self._coffee)}g or {int(self._coffee / G_TO_OZ_RATIO)}oz
+            Water: {int(self._concentrate_water)}ml or {int(self._concentrate_water / ML_TO_OZ_RATIO)}oz
+            Coffee/Water Ratio: 1:{cr}
+        Water: {int(self._rest_of_water)}ml or {int(self._rest_of_water / ML_TO_OZ_RATIO)}oz
+        Concentrate/Water Ratio: 1:{self._concentrate_to_water_ratio}
+        """)
+
+
+class NonConcentrate(ColdBrew):
+    def __init__(self, desired_volume, ratio):
+        super().__init__(desired_volume, ratio)
+        self._coffee = desired_volume / (ratio - WAF)
+        self._total_water = self._coffee * ratio
+
+    @override
+    def print(self):
+        print(f"""
+        Cold Brew - {int(self._desired_volume)}ml or {int(self._desired_volume / ML_TO_OZ_RATIO)}oz
+        Coffee/Water Ratio: 1:{int(self._ratio)}
+        ---------------------
+        Coffee: {int(self._coffee)}g or {int(self._coffee / G_TO_OZ_RATIO)}oz
+        Total Water: {int(self._total_water)}ml or {int(self._total_water / ML_TO_OZ_RATIO)}oz
+        """)
 
 
 def get_inputs(conc: bool):
@@ -60,17 +93,7 @@ if __name__ == '__main__':
                 print(f"'{cr}' or '{r}' value not type 'integer' or 'float'")
                 continue
             concentrate = Concentrate(v, cr, r)
-            print(f"""
-Cold Brew - {int(concentrate.desired_volume)}ml or {int(concentrate.desired_volume / ML_TO_OZ_RATIO)}oz
-Coffee/Water Ratio: 1:{int(concentrate.ratio)}
----------------------
-Concentrate: {int(concentrate.concentrate_volume)}ml or {int(concentrate.concentrate_volume / ML_TO_OZ_RATIO)}oz
-    Coffee: {int(concentrate.coffee)}g or {int(concentrate.coffee / G_TO_OZ_RATIO)}oz
-    Water: {int(concentrate.concentrate_water)}ml or {int(concentrate.concentrate_water / ML_TO_OZ_RATIO)}oz
-    Coffee/Water Ratio: 1:{cr}
-Water: {int(concentrate.rest_of_water)}ml or {int(concentrate.rest_of_water / ML_TO_OZ_RATIO)}oz
-Concentrate/Water Ratio: 1:{concentrate.concentrate_to_water_ratio}
-""")
+            concentrate.print()
         elif re.fullmatch(r'[Nn]', if_concentrate):
             v, r = get_inputs(False)
             try:
@@ -89,13 +112,7 @@ Concentrate/Water Ratio: 1:{concentrate.concentrate_to_water_ratio}
                 print(f"'{r}' value not type 'integer' or 'float'")
                 continue
             non_concentrate = NonConcentrate(v, r)
-            print(f"""
-Cold Brew - {int(non_concentrate.desired_volume)}ml or {int(non_concentrate.desired_volume / ML_TO_OZ_RATIO)}oz
-Coffee/Water Ratio: 1:{int(non_concentrate.ratio)}
----------------------
-Coffee: {int(non_concentrate.coffee)}g or {int(non_concentrate.coffee / G_TO_OZ_RATIO)}oz
-Total Water: {int(non_concentrate.total_water)}ml or {int(non_concentrate.total_water / ML_TO_OZ_RATIO)}oz
-""")
+            non_concentrate.print()
         else:
             print('Invalid entry.')
             continue
