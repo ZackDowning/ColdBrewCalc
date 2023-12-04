@@ -37,13 +37,20 @@ class NonConcentrate:
         self.total_water = self.coffee * ratio
 
 
+def get_inputs(conc: bool):
+    volume = input('Enter total desired volume (add "ml" or "oz" to end with no space): ')
+    total_ratio = input('Enter "x" value for total coffee-water ratio "1:x" (Press enter for 1:17): ')
+    if conc:
+        conc_ratio = input('Enter "x" value for concentrate coffee-water ratio "1:x": ')
+        return volume, conc_ratio, total_ratio
+    return volume, total_ratio
+
+
 if __name__ == '__main__':
     while True:
         if_concentrate = input('Do you want to use concentrate? [Y]/N: ')
         if re.fullmatch(r'[Yy]|', if_concentrate):
-            v = input('Enter total desired volume (add "ml" or "oz" to end with no space): ')
-            cr = input('Enter "x" value for concentrate coffee-water ratio "1:x": ')
-            r = input('Enter "x" value for total coffee-water ratio "1:x" (Press enter for 1:17): ')
+            v, cr, r = get_inputs(True)
             try:
                 if 'oz' in v:
                     v = float(v.strip('oz')) * ML_TO_OZ_RATIO
@@ -73,8 +80,7 @@ Water: {int(concentrate.rest_of_water)}ml or {int(concentrate.rest_of_water / ML
 Concentrate/Water Ratio: 1:{concentrate.concentrate_to_water_ratio}
 """)
         elif re.fullmatch(r'[Nn]', if_concentrate):
-            v = input('Enter total desired volume (add "ml" or "oz" to end with no space): ')
-            r = input('Enter "x" value for total coffee-water ratio "1:x" (Press enter for 1:17): ')
+            v, r = get_inputs(False)
             try:
                 if 'oz' in v:
                     v = float(v.strip('oz')) * ML_TO_OZ_RATIO
