@@ -1,6 +1,6 @@
 import re
 
-from typing import override, Optional
+from typing import override
 
 ML_TO_OZ_RATIO = 29.574
 G_TO_OZ_RATIO = 28.35
