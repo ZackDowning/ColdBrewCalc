@@ -14,7 +14,7 @@ class ColdBrew:
         self._ratio = ratio
         self._desired_volume = desired_volume
 
-    def print(self):
+    def get_recipe(self) -> str:
         pass
 
 
@@ -32,8 +32,8 @@ class Concentrate(ColdBrew):
         self._concentrate_water = self._coffee * concentrate_ratio
 
     @override
-    def print(self):
-        print(f"""
+    def get_recipe(self):
+        return f"""
         Cold Brew - {int(self._desired_volume)}ml or {int(self._desired_volume / ML_TO_OZ_RATIO)}oz
         Coffee/Water Ratio: 1:{int(self._ratio)}
         ---------------------
@@ -43,7 +43,7 @@ class Concentrate(ColdBrew):
             Coffee/Water Ratio: 1:{self._concentrate_ratio}
         Water: {int(self._rest_of_water)}ml or {int(self._rest_of_water / ML_TO_OZ_RATIO)}oz
         Concentrate/Water Ratio: 1:{self._concentrate_to_water_ratio}
-        """)
+        """
 
 
 class NonConcentrate(ColdBrew):
@@ -53,14 +53,14 @@ class NonConcentrate(ColdBrew):
         self._total_water = self._coffee * ratio
 
     @override
-    def print(self):
-        print(f"""
+    def get_recipe(self):
+        return f"""
         Cold Brew - {int(self._desired_volume)}ml or {int(self._desired_volume / ML_TO_OZ_RATIO)}oz
         Coffee/Water Ratio: 1:{int(self._ratio)}
         ---------------------
         Coffee: {int(self._coffee)}g or {int(self._coffee / G_TO_OZ_RATIO)}oz
         Total Water: {int(self._total_water)}ml or {int(self._total_water / ML_TO_OZ_RATIO)}oz
-        """)
+        """
 
 
 def get_inputs(concentrate: Optional[re.Match]):
@@ -121,7 +121,8 @@ def input_loop():
             continue
 
         cold_brew = Concentrate(*cleaned_inputs) if use_concentrate else NonConcentrate(*cleaned_inputs)
-        cold_brew.print()
+        recipe = cold_brew.get_recipe()
+        print(recipe)
 
         calc_again = input('Do you want to calculate again? Y/[N]: ')
         if re.fullmatch(r'[Yy]', calc_again):
