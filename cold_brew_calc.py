@@ -6,6 +6,7 @@ ML_TO_OZ_RATIO = 29.574
 G_TO_OZ_RATIO = 28.35
 # Water absorption factor - 2.5 grams of water is absorbed to every gram of coffee used
 WAF = 2.5
+DEFAULT_TOTAL_RATIO = 17
 
 
 class ColdBrew:
@@ -81,6 +82,10 @@ def get_volume(volume_input):
         return None
 
 
+def get_ratio(ratio):
+    return DEFAULT_TOTAL_RATIO if ratio == '' else int(ratio)
+
+
 if __name__ == '__main__':
     while True:
         if_concentrate = input('Do you want to use concentrate? [Y]/N: ')
@@ -90,11 +95,8 @@ if __name__ == '__main__':
                 v = get_volume(v)
                 if not v:
                     continue
+                r = get_ratio(r)
                 cr = int(cr)
-                if r == '':
-                    r = 17
-                else:
-                    r = int(r)
             except ValueError:
                 print(f"'{cr}' or '{r}' value not type 'integer' or 'float'")
                 continue
@@ -106,10 +108,7 @@ if __name__ == '__main__':
                 v = get_volume(v)
                 if not v:
                     continue
-                if r == '':
-                    r = 17
-                else:
-                    r = int(r)
+                r = get_ratio(r)
             except ValueError:
                 print(f"'{r}' value not type 'integer' or 'float'")
                 continue
