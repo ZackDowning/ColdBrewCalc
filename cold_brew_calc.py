@@ -114,7 +114,8 @@ def input_yes_or_no(message: str, yes_default: bool = True) -> bool:
 
 def main():
     print(WELCOME_BANNER)
-    while True:
+    calc_again = True
+    while calc_again:
         use_concentrate = input_yes_or_no("Do you want to use concentrate? [Y]/N: ")
         inputs = get_cold_brew_inputs(use_concentrate)
 
@@ -123,8 +124,6 @@ def main():
         print(recipe)
 
         calc_again = input_yes_or_no("Do you want to calculate again? Y/[N]: ", False)
-        if not calc_again:
-            break
 
 
 if __name__ == "__main__":
